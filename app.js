@@ -76,16 +76,59 @@ function onClick(event) {
     }
   }
   currentRound++;
-  if (currentRound === 26){
+  if (currentRound === 4){
     image1.removeEventListener('click', onClick, getImages);
     image2.removeEventListener('click', onClick, getImages);
     image3.removeEventListener('click', onClick, getImages);
+    renderChart();
   }
   else {
     getImages();
   }
 }
 
+let productNames = [];
+let productLikes = [];
+let productViews = [];
+function renderChart() {
+  for (let i = 0; i < allProducts.length; i++) {
+    productNames.push(allProducts[i].title);
+    productLikes.push(allProducts[i].click);
+    productViews.push(allProducts[i].shownImage);
+  }
+  console.log(productLikes);
+}
 
 
+const data = {
+  labels: productNames,
+  datasets: [{
+    label: 'Times Clicked',
+    data: productLikes,
+    backgroundColor: ['red'],
+    borderColor: ['red'],
+    borderWidth: 2
+  },
+  {
+    label: 'Times Viewed',
+    data: productViews,
+    backgroundColor: ['blue'],
+    borderColor: ['blue'],
+    borderWidth: 2
 
+  }]
+};
+
+const config = {
+  type: 'bar',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+};
+let canvasChart = document.getElementById('myChart');
+const myChart = new Chart(canvasChart, config);
