@@ -76,10 +76,10 @@ function onClick(event) {
     }
   }
   currentRound++;
-  if (currentRound === 20){
-    image1.removeEventListener('click', onClick(), getImages);
-    image2.removeEventListener('click', onClick(), getImages);
-    image3.removeEventListener('click', onClick(), getImages);
+  if (currentRound === 26){
+    image1.removeEventListener('click', onClick, getImages);
+    image2.removeEventListener('click', onClick, getImages);
+    image3.removeEventListener('click', onClick, getImages);
   }
   else {
     getImages();
