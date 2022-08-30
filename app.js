@@ -1,5 +1,13 @@
+let image1 = document.getElementById('product1');
+image1.addEventListener('click', onClick);
+
+let image2 = document.getElementById('product2');
+image2.addEventListener('click', onClick);
+
+let image3 = document.getElementById('product3');
+image3.addEventListener('click', onClick);
+
 let image = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
-let uniqueDisplay = [];
 let allProducts = [];
 let currentRound = 0;
 
@@ -24,14 +32,11 @@ function getRandomItem() {
 }
 function uniqueImageChecker (){
   let imageArray = [];
-  while (uniqueDisplay.length < 3) {
+  while (imageArray.length < 3) {
     let item = getRandomItem();
-    if (imageArray.includes(item) || uniqueDisplay.includes(item)) {}
-    else {
+    if (!imageArray.includes(item)) {
       imageArray.push(item);
     }
-    uniqueDisplay = imageArray;
-    console.log(imageArray);
   }
   return imageArray;
 }
@@ -39,9 +44,7 @@ function uniqueImageChecker (){
 
 function getImages() {
   let newImage = uniqueImageChecker();
-  console.log(newImage);
   let product1 = allProducts[newImage[0]];
-  console.log(newImage);
   let product2 = allProducts[newImage[1]];
   let product3 = allProducts[newImage[2]];
   let image1 = document.getElementById('product1');
@@ -83,14 +86,6 @@ function onClick(event) {
   }
 }
 
-let image1 = document.getElementById('product1');
-image1.addEventListener('click', onClick);
-
-let image2 = document.getElementById('product2');
-image2.addEventListener('click', onClick);
-
-let image3 = document.getElementById('product3');
-image3.addEventListener('click', onClick);
 
 
 
