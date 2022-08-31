@@ -71,3 +71,14 @@
     height: 460px;
     width: 920px;
 }
+
+#list {
+   border: solid black 3px;
+   display: inline-block;
+   padding-left: 10px;
+   width: 240%;
+}
+
+#list li {
+    padding-top: 20px;
+}
