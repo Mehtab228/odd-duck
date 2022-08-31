@@ -7,10 +7,14 @@ image2.addEventListener('click', onClick);
 let image3 = document.getElementById('product3');
 image3.addEventListener('click', onClick);
 
+let canvasChart = document.getElementById('myChart');
+let canvasChart2 = document.getElementById('myChart2');
+
 let image = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let allProducts = [];
 let currentRound = 0;
 let previousArray = [];
+
 
 
 function Product(title, src, click = 0, shownImage = 0) {
@@ -25,6 +29,7 @@ for (let i = 0; i < image.length; i++){
   new Product(`${image[i]}`, `assets/${image[i]}.jpeg`);
 }
 console.log(allProducts);
+
 
 function getRandomItem() {
   let imgLen = image.length;
@@ -84,7 +89,10 @@ function onClick(event) {
     image2.removeEventListener('click', onClick, getImages);
     image3.removeEventListener('click', onClick, getImages);
     renderChart();
+    renderChart2();
     const myChart = new Chart(canvasChart, config);
+    const myChart2 = new Chart(canvasChart2, config2);
+    localStorage.setItem('storeClicks', JSON.stringify(allProducts));
     renderList();
   }
   else {
@@ -92,13 +100,16 @@ function onClick(event) {
   }
 }
 
+
+
+
+
 let getEl = document.getElementById('list');
 function renderList() {
   for (let i = 0; i < allProducts.length; i++){
     let newListEl = document.createElement('li');
     newListEl.textContent = `${allProducts[i].title} recieved ${allProducts[i].click} clicks`;
     getEl.appendChild(newListEl);
-    console.log(newListEl);
   }
 }
 
@@ -111,7 +122,6 @@ function renderChart() {
     productLikes.push(allProducts[i].click);
     productViews.push(allProducts[i].shownImage);
   }
-  console.log(productLikes);
 }
 
 
@@ -145,4 +155,55 @@ const config = {
     }
   },
 };
-let canvasChart = document.getElementById('myChart');
+
+
+let productNames2 = [];
+let ratioLikesViews = [];
+function renderChart2() {
+  for (let i = 0; i < allProducts.length; i++) {
+    let likesViews = ((allProducts[i].click/allProducts[i].shownImage) * 100).toFixed(0);
+    productNames2.push(allProducts[i].title);
+    ratioLikesViews.push(likesViews);
+  }
+}
+
+const data2 = {
+  labels: productNames2,
+  datasets: [{
+    label: 'Percent',
+    data: ratioLikesViews,
+    backgroundColor: ['gray'],
+    borderColor: ['black'],
+    borderWidth: 2
+  },
+  ]
+};
+
+
+const config2 = {
+  type: 'bar',
+  data: data2,
+  options: {
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      }
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: true,
+        text: 'Ratio of clicks to views'
+      },
+    }
+  },
+};
+
+let maybeStored = localStorage.getItem('storeClicks');
+if (maybeStored) {
+  allProducts = JSON.parse(maybeStored);
+}
