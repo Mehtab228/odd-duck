@@ -10,6 +10,7 @@ image3.addEventListener('click', onClick);
 let image = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 let allProducts = [];
 let currentRound = 0;
+let previousArray = [];
 
 
 function Product(title, src, click = 0, shownImage = 0) {
@@ -30,14 +31,16 @@ function getRandomItem() {
   let rand = Math.floor(Math.random() * imgLen);
   return rand;
 }
+
 function uniqueImageChecker (){
   let imageArray = [];
   while (imageArray.length < 3) {
     let item = getRandomItem();
-    if (!imageArray.includes(item)) {
+    if (!imageArray.includes(item) && !previousArray.includes(item)) {
       imageArray.push(item);
     }
   }
+  previousArray = [imageArray[0], imageArray[1], imageArray[2]];
   return imageArray;
 }
 
@@ -76,11 +79,12 @@ function onClick(event) {
     }
   }
   currentRound++;
-  if (currentRound === 4){
+  if (currentRound === 26){
     image1.removeEventListener('click', onClick, getImages);
     image2.removeEventListener('click', onClick, getImages);
     image3.removeEventListener('click', onClick, getImages);
     renderChart();
+    const myChart = new Chart(canvasChart, config);
   }
   else {
     getImages();
@@ -131,4 +135,3 @@ const config = {
   },
 };
 let canvasChart = document.getElementById('myChart');
-const myChart = new Chart(canvasChart, config);
