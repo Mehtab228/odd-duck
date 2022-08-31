@@ -85,11 +85,19 @@ function onClick(event) {
     image3.removeEventListener('click', onClick, getImages);
     renderChart();
     const myChart = new Chart(canvasChart, config);
+    for (let i = 0; i < allProducts.length; i++){
+      let newListEl = document.createElement('li');
+      newListEl.textContent = `${allProducts.title[i]} recieved ${allProducts.click[i]} clicks`;
+      getEl.appendChild(newListEl);
+      console.log(newListEl);
+    }
   }
   else {
     getImages();
   }
 }
+
+let getEl = document.getElementById('list');
 
 let productNames = [];
 let productLikes = [];
